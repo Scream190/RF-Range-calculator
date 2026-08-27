@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RF Link Budget Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>RF Link Budget Calculator</h1>
+  <p class="subtitle">Gain-Staging &amp; Dropout-Vermeidung für Funkstrecken &mdash; nach der Methodik von Stephen Pavlik (Sound Design Live)</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab-btn active" data-tab="mic" role="tab" aria-selected="true">RF Microphone Link Budget</button>
+  <button class="tab-btn" data-tab="iem" role="tab" aria-selected="false">IEM Link Budget</button>
+</nav>
+
+<main>
+  <!-- ===================== RF MIC CALCULATOR ===================== -->
+  <section id="mic" class="panel active" role="tabpanel">
+    <div class="grid">
+      <form class="inputs" id="mic-form">
+        <div class="form-header">
+          <h2>Eingaben</h2>
+          <button type="button" class="example-btn" id="mic-example">Beispiel aus PDF laden</button>
+        </div>
+
+        <fieldset>
+          <legend>Sender (Mikrofon-Bodypack/Handsender)</legend>
+          <div class="field">
+            <label for="mic-txpower">TX Sendeleistung <span class="unit">(mW)</span></label>
+            <input type="number" id="mic-txpower" step="any" min="0" value="20">
+          </div>
+          <div class="field">
+            <label for="mic-txant">TX Antennengewinn <span class="unit">(dB)</span></label>
+            <input type="number" id="mic-txant" step="any" value="0">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Freiraumdämpfung (Free Space Path Loss)</legend>
+          <div class="field">
+            <label for="mic-dist">Entfernung TX&nbsp;&rarr;&nbsp;RX <span class="unit">(m)</span></label>
+            <input type="number" id="mic-dist" step="any" min="0.01" value="12.2">
+          </div>
+          <div class="field">
+            <label for="mic-freq">Frequenz <span class="unit">(MHz)</span></label>
+            <input type="number" id="mic-freq" step="any" min="1" value="540">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Polarisation</legend>
+          <div class="field">
+            <label for="mic-pol">Polarisations-Fehlanpassung <span class="unit">(&deg;, 0&ndash;89.9)</span></label>
+            <input type="number" id="mic-pol" step="any" min="0" max="89.9" value="45">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Empfangsantenne</legend>
+          <div class="field">
+            <label for="mic-rxant">RX Antennengewinn <span class="unit">(dB)</span></label>
+            <input type="number" id="mic-rxant" step="any" value="7">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Kabel/Stecker &ndash; Antenne &rarr; Multicoupler</legend>
+          <div class="field">
+            <label for="mic-cable1">Kabelverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="mic-cable1" step="any" min="0" value="2.8">
+          </div>
+          <div class="field">
+            <label for="mic-conn1">Steckerverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="mic-conn1" step="any" min="0" value="0.5">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Multicoupler</legend>
+          <div class="field">
+            <label for="mic-multi">Gewinn/Verlust <span class="unit">(dB, + oder &minus;)</span></label>
+            <input type="number" id="mic-multi" step="any" value="0">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Kabel/Stecker &ndash; Multicoupler &rarr; Empfänger</legend>
+          <div class="field">
+            <label for="mic-cable2">Kabelverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="mic-cable2" step="any" min="0" value="0.28">
+          </div>
+          <div class="field">
+            <label for="mic-conn2">Steckerverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="mic-conn2" step="any" min="0" value="0.5">
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="results" id="mic-results"></div>
+    </div>
+  </section>
+
+  <!-- ===================== IEM CALCULATOR ===================== -->
+  <section id="iem" class="panel" role="tabpanel">
+    <div class="grid">
+      <form class="inputs" id="iem-form">
+        <div class="form-header">
+          <h2>Eingaben</h2>
+          <button type="button" class="example-btn" id="iem-example">Beispiel aus PDF laden</button>
+        </div>
+
+        <fieldset>
+          <legend>Sender (IEM-Rack)</legend>
+          <div class="field">
+            <label for="iem-txpower">TX Sendeleistung <span class="unit">(mW)</span></label>
+            <input type="number" id="iem-txpower" step="any" min="0" value="30">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Kabel/Stecker &ndash; TX &rarr; Combiner</legend>
+          <div class="field">
+            <label for="iem-cable1">Kabelverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="iem-cable1" step="any" min="0" value="0.6">
+          </div>
+          <div class="field">
+            <label for="iem-conn1">Steckerverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="iem-conn1" step="any" min="0" value="0.5">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Combiner</legend>
+          <div class="field">
+            <label for="iem-combiner">Gewinn/Verlust <span class="unit">(dB, + oder &minus;)</span></label>
+            <input type="number" id="iem-combiner" step="any" value="-3">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Kabel/Stecker &ndash; Combiner &rarr; Sendeantenne</legend>
+          <div class="field">
+            <label for="iem-cable2">Kabelverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="iem-cable2" step="any" min="0" value="1.67">
+          </div>
+          <div class="field">
+            <label for="iem-conn2">Steckerverlust <span class="unit">(dB)</span></label>
+            <input type="number" id="iem-conn2" step="any" min="0" value="0.5">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sendeantenne</legend>
+          <div class="field">
+            <label for="iem-txant">TX Antennengewinn <span class="unit">(dB)</span></label>
+            <input type="number" id="iem-txant" step="any" value="10">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Polarisation</legend>
+          <div class="field">
+            <label for="iem-pol">Polarisations-Fehlanpassung <span class="unit">(&deg;, 0&ndash;89.9)</span></label>
+            <input type="number" id="iem-pol" step="any" min="0" max="89.9" value="45">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Freiraumdämpfung (Free Space Path Loss)</legend>
+          <div class="field">
+            <label for="iem-dist">Entfernung TX&nbsp;&rarr;&nbsp;Bodypack <span class="unit">(m)</span></label>
+            <input type="number" id="iem-dist" step="any" min="0.01" value="12.2">
+          </div>
+          <div class="field">
+            <label for="iem-freq">Frequenz <span class="unit">(MHz)</span></label>
+            <input type="number" id="iem-freq" step="any" min="1" value="600">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Empfänger (IEM-Bodypack)</legend>
+          <div class="field">
+            <label for="iem-rxant">RX Antennengewinn <span class="unit">(dB)</span></label>
+            <input type="number" id="iem-rxant" step="any" value="1">
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="results" id="iem-results"></div>
+    </div>
+  </section>
+
+  <footer class="app-footer">
+    <p>Formeln nach &bdquo;Avoid RF Dropouts Through Proper Gain Staging&ldquo; von Stephen Pavlik, Sound Design Live (sounddesignlive.com). Berücksichtigt keine zusätzlichen Verluste durch Körperabschattung (body loss), Fading oder Antennen-Fehlanpassung &mdash; als Sicherheitsmarge werden in der Praxis oft zusätzlich 20&ndash;30&nbsp;dB Reserve empfohlen.</p>
+  </footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
