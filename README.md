@@ -45,11 +45,11 @@ Empfangspegel =
   - Freiraumdämpfung
   - Polarisations-Fehlanpassung
   + RX-Antennengewinn
-  - Kabelverlust (Antenne → Multicoupler)
-  - Steckerverlust (Antenne → Multicoupler)
-  + Multicoupler Gewinn/Verlust
-  - Kabelverlust (Multicoupler → Empfänger)
-  - Steckerverlust (Multicoupler → Empfänger)
+  - Kabelverlust (Antenne → Splitter)
+  - Steckerverlust (Antenne → Splitter)
+  + Splitter Gewinn/Verlust
+  - Kabelverlust (Splitter → Empfänger)
+  - Steckerverlust (Splitter → Empfänger)
 ```
 
 ### IEM Link Budget
@@ -67,6 +67,33 @@ Empfangspegel (am Bodypack) =
   - Freiraumdämpfung
   + RX-Antennengewinn (Bodypack)
 ```
+
+## Kabelverlust aus Kabeltyp + Länge
+
+Bei jedem Kabelverlust-Feld kann per Checkbox "aus Kabeltyp + Länge berechnen"
+umgeschaltet werden. Der dB-Wert wird dann automatisch aus Kabeltyp, Länge
+und der jeweils eingetragenen Frequenz berechnet (Kabeldämpfung ist
+frequenzabhängig) und in das dB-Feld eingetragen; manuelles Bearbeiten ist in
+diesem Modus deaktiviert, bis die Checkbox wieder ausgeschaltet wird.
+
+Hinterlegte Kabeltypen (typische Herstellerangaben, ca.-Werte, dB pro 100ft
+bei Referenzfrequenzen, dazwischen/darüber hinaus interpoliert bzw.
+extrapoliert über die für Koaxkabel typische
+&radic;Frequenz-Näherung):
+
+| Kabeltyp                | ca. dB/100ft @ 400 MHz | ca. dB/100ft @ 900 MHz |
+|--------------------------|------------------------|-------------------------|
+| RG58                     | 9.9                     | 15.7                    |
+| RG8X (Mini-8)            | 5.9                     | 9.3                     |
+| RG213 / RG8              | 4.4                     | 7.2                     |
+| Belden 9913 / 9913F7     | 2.4                     | 3.7                     |
+| LMR-195                  | 7.9                     | 12.1                    |
+| LMR-240                  | 4.9                     | 7.5                     |
+| LMR-400                  | 2.5                     | 3.9                     |
+
+Für den tatsächlich verbauten Kabeltyp/die genaue Charge im Zweifel das
+Datenblatt des Herstellers prüfen — die hinterlegten Werte sind branchenübliche
+Näherungen, keine Garantiewerte.
 
 ## Signalbewertung
 

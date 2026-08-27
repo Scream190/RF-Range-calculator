@@ -68,10 +68,32 @@
         </fieldset>
 
         <fieldset>
-          <legend>Kabel/Stecker &ndash; Antenne &rarr; Multicoupler</legend>
+          <legend>Kabel/Stecker &ndash; Antenne &rarr; Splitter</legend>
           <div class="field">
             <label for="mic-cable1">Kabelverlust <span class="unit">(dB)</span></label>
             <input type="number" id="mic-cable1" step="any" min="0" value="2.8">
+          </div>
+          <div class="cable-calc-toggle">
+            <label for="mic-cable1-mode"><input type="checkbox" id="mic-cable1-mode"> aus Kabeltyp + Länge berechnen</label>
+          </div>
+          <div class="cable-calc-fields" id="mic-cable1-calc" hidden>
+            <div class="field">
+              <label for="mic-cable1-type">Kabeltyp</label>
+              <select id="mic-cable1-type">
+                <option value="rg58">RG58</option>
+                <option value="rg8x" selected>RG8X (Mini-8)</option>
+                <option value="rg213">RG213 / RG8</option>
+                <option value="belden9913">Belden 9913 / 9913F7</option>
+                <option value="lmr195">LMR-195</option>
+                <option value="lmr240">LMR-240</option>
+                <option value="lmr400">LMR-400</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mic-cable1-length">Kabellänge <span class="unit">(m)</span></label>
+              <input type="number" id="mic-cable1-length" step="any" min="0" value="9">
+            </div>
+            <p class="cable-calc-note">&approx; <strong id="mic-cable1-computed">&ndash;</strong> dB bei <span id="mic-cable1-computed-freq">&ndash;</span>&nbsp;MHz (typische Herstellerwerte)</p>
           </div>
           <div class="field">
             <label for="mic-conn1">Steckerverlust <span class="unit">(dB)</span></label>
@@ -80,18 +102,40 @@
         </fieldset>
 
         <fieldset>
-          <legend>Multicoupler</legend>
+          <legend>Splitter</legend>
           <div class="field">
-            <label for="mic-multi">Gewinn/Verlust <span class="unit">(dB, + oder &minus;)</span></label>
-            <input type="number" id="mic-multi" step="any" value="0">
+            <label for="mic-splitter">Gewinn/Verlust <span class="unit">(dB, + oder &minus;)</span></label>
+            <input type="number" id="mic-splitter" step="any" value="0">
           </div>
         </fieldset>
 
         <fieldset>
-          <legend>Kabel/Stecker &ndash; Multicoupler &rarr; Empfänger</legend>
+          <legend>Kabel/Stecker &ndash; Splitter &rarr; Empfänger</legend>
           <div class="field">
             <label for="mic-cable2">Kabelverlust <span class="unit">(dB)</span></label>
             <input type="number" id="mic-cable2" step="any" min="0" value="0.28">
+          </div>
+          <div class="cable-calc-toggle">
+            <label for="mic-cable2-mode"><input type="checkbox" id="mic-cable2-mode"> aus Kabeltyp + Länge berechnen</label>
+          </div>
+          <div class="cable-calc-fields" id="mic-cable2-calc" hidden>
+            <div class="field">
+              <label for="mic-cable2-type">Kabeltyp</label>
+              <select id="mic-cable2-type">
+                <option value="rg58">RG58</option>
+                <option value="rg8x" selected>RG8X (Mini-8)</option>
+                <option value="rg213">RG213 / RG8</option>
+                <option value="belden9913">Belden 9913 / 9913F7</option>
+                <option value="lmr195">LMR-195</option>
+                <option value="lmr240">LMR-240</option>
+                <option value="lmr400">LMR-400</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mic-cable2-length">Kabellänge <span class="unit">(m)</span></label>
+              <input type="number" id="mic-cable2-length" step="any" min="0" value="1">
+            </div>
+            <p class="cable-calc-note">&approx; <strong id="mic-cable2-computed">&ndash;</strong> dB bei <span id="mic-cable2-computed-freq">&ndash;</span>&nbsp;MHz (typische Herstellerwerte)</p>
           </div>
           <div class="field">
             <label for="mic-conn2">Steckerverlust <span class="unit">(dB)</span></label>
@@ -127,6 +171,28 @@
             <label for="iem-cable1">Kabelverlust <span class="unit">(dB)</span></label>
             <input type="number" id="iem-cable1" step="any" min="0" value="0.6">
           </div>
+          <div class="cable-calc-toggle">
+            <label for="iem-cable1-mode"><input type="checkbox" id="iem-cable1-mode"> aus Kabeltyp + Länge berechnen</label>
+          </div>
+          <div class="cable-calc-fields" id="iem-cable1-calc" hidden>
+            <div class="field">
+              <label for="iem-cable1-type">Kabeltyp</label>
+              <select id="iem-cable1-type">
+                <option value="rg58">RG58</option>
+                <option value="rg8x" selected>RG8X (Mini-8)</option>
+                <option value="rg213">RG213 / RG8</option>
+                <option value="belden9913">Belden 9913 / 9913F7</option>
+                <option value="lmr195">LMR-195</option>
+                <option value="lmr240">LMR-240</option>
+                <option value="lmr400">LMR-400</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="iem-cable1-length">Kabellänge <span class="unit">(m)</span></label>
+              <input type="number" id="iem-cable1-length" step="any" min="0" value="2">
+            </div>
+            <p class="cable-calc-note">&approx; <strong id="iem-cable1-computed">&ndash;</strong> dB bei <span id="iem-cable1-computed-freq">&ndash;</span>&nbsp;MHz (typische Herstellerwerte)</p>
+          </div>
           <div class="field">
             <label for="iem-conn1">Steckerverlust <span class="unit">(dB)</span></label>
             <input type="number" id="iem-conn1" step="any" min="0" value="0.5">
@@ -146,6 +212,28 @@
           <div class="field">
             <label for="iem-cable2">Kabelverlust <span class="unit">(dB)</span></label>
             <input type="number" id="iem-cable2" step="any" min="0" value="1.67">
+          </div>
+          <div class="cable-calc-toggle">
+            <label for="iem-cable2-mode"><input type="checkbox" id="iem-cable2-mode"> aus Kabeltyp + Länge berechnen</label>
+          </div>
+          <div class="cable-calc-fields" id="iem-cable2-calc" hidden>
+            <div class="field">
+              <label for="iem-cable2-type">Kabeltyp</label>
+              <select id="iem-cable2-type">
+                <option value="rg58">RG58</option>
+                <option value="rg8x" selected>RG8X (Mini-8)</option>
+                <option value="rg213">RG213 / RG8</option>
+                <option value="belden9913">Belden 9913 / 9913F7</option>
+                <option value="lmr195">LMR-195</option>
+                <option value="lmr240">LMR-240</option>
+                <option value="lmr400">LMR-400</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="iem-cable2-length">Kabellänge <span class="unit">(m)</span></label>
+              <input type="number" id="iem-cable2-length" step="any" min="0" value="15">
+            </div>
+            <p class="cable-calc-note">&approx; <strong id="iem-cable2-computed">&ndash;</strong> dB bei <span id="iem-cable2-computed-freq">&ndash;</span>&nbsp;MHz (typische Herstellerwerte)</p>
           </div>
           <div class="field">
             <label for="iem-conn2">Steckerverlust <span class="unit">(dB)</span></label>

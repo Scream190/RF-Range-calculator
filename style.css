@@ -166,6 +166,61 @@ legend {
   border-color: var(--accent);
 }
 
+.field select {
+  width: 190px;
+  background: var(--bg-field);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 7px 9px;
+  font-size: 0.88rem;
+}
+
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.field input[readonly] {
+  color: var(--text-dim);
+  border-style: dashed;
+}
+
+.cable-calc-toggle {
+  margin: 2px 0 6px;
+}
+
+.cable-calc-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.cable-calc-toggle input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+.cable-calc-fields {
+  background: var(--bg-field);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 10px 12px 4px;
+  margin: 0 0 10px;
+}
+
+.cable-calc-note {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+}
+
+.cable-calc-note strong {
+  color: var(--accent);
+}
+
 .results {
   position: sticky;
   top: 16px;
