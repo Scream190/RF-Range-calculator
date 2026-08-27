@@ -1,0 +1,5 @@
+macos/dist/
+macos/build/
+macos/.venv/
+*.zip
+__pycache__/

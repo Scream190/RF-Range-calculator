@@ -6,9 +6,15 @@ Funkmikrofon- (RF Mic) und In-Ear-Monitoring-Strecken (IEM) für Live-Beschallun
 Basiert auf der Methodik von Stephen Pavlik ("Avoid RF Dropouts Through Proper Gain
 Staging", Sound Design Live, sounddesignlive.com).
 
-## Nutzung
+## macOS App
 
-Einfach `index.html` im Browser öffnen (kein Build, kein Server, keine Abhängigkeiten).
+Eine native macOS-App (echtes Fenster statt Browser-Tab) gibt es in [`macos/`](macos/README.md) –
+fertiges App-Bundle zum Draufziehen in den `Programme`-Ordner oder selbst bauen mit
+`macos/build_app.sh`.
+
+## Web-Version
+
+Alternativ einfach `index.html` im Browser öffnen (kein Build, kein Server, keine Abhängigkeiten).
 
 Es gibt zwei Tabs:
 

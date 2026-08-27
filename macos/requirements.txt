@@ -1,0 +1,4 @@
+# Nur auf macOS installieren.
+pywebview>=4.4
+pyobjc-framework-Cocoa
+pyobjc-framework-WebKit
