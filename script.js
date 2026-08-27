@@ -35,49 +35,56 @@ function signed(n, digits = 2) {
 }
 
 /* ---------- Coax cable attenuation database ----------
- * Typische Herstellerangaben (ca.-Werte, dB pro 100ft) bei Referenz-
- * frequenzen aus gängigen Datenblättern (RG-Kabel, Times Microwave LMR,
- * Belden). Für den tatsächlich verbauten Kabeltyp/Charge im Zweifel das
- * Datenblatt des Herstellers pruefen. */
+ * Daempfungswerte in dB pro 100m bei Referenzfrequenzen. RG-/LMR-/Belden-
+ * Werte sind typische Herstellerangaben (ca.-Werte, aus dB/100ft-Datenblatt-
+ * angaben umgerechnet). Aircell 7/5 Werte stammen direkt aus dem
+ * SSB-Electronic-Datenblatt (dB/100m). Für den tatsächlich verbauten
+ * Kabeltyp/die Charge im Zweifel das Datenblatt des Herstellers pruefen. */
 
 const CABLE_TYPES = {
   rg58: {
     label: "RG58",
-    points: [[100, 4.9], [400, 9.9], [900, 15.7], [1000, 16.6]],
+    points: [[100, 16.1], [400, 32.5], [900, 51.5], [1000, 54.5]],
   },
   rg8x: {
     label: "RG8X (Mini-8)",
-    points: [[100, 2.9], [400, 5.9], [900, 9.3], [1000, 9.9]],
+    points: [[100, 9.5], [400, 19.4], [900, 30.5], [1000, 32.5]],
   },
   rg213: {
     label: "RG213 / RG8",
-    points: [[100, 2.1], [400, 4.4], [900, 7.2], [1000, 7.7]],
+    points: [[100, 6.9], [400, 14.4], [900, 23.6], [1000, 25.3]],
   },
   belden9913: {
     label: "Belden 9913 / 9913F7",
-    points: [[100, 1.2], [400, 2.4], [900, 3.7], [1000, 4.0]],
+    points: [[100, 3.9], [400, 7.9], [900, 12.1], [1000, 13.1]],
   },
   lmr195: {
     label: "LMR-195",
-    points: [[100, 3.9], [400, 7.9], [900, 12.1], [1000, 12.8], [1500, 15.9], [2000, 18.6]],
+    points: [[100, 12.8], [400, 25.9], [900, 39.7], [1000, 42.0], [1500, 52.2], [2000, 61.0]],
   },
   lmr240: {
     label: "LMR-240",
-    points: [[100, 2.4], [400, 4.9], [900, 7.5], [1000, 7.9], [1500, 9.8], [2000, 11.5]],
+    points: [[100, 7.9], [400, 16.1], [900, 24.6], [1000, 25.9], [1500, 32.2], [2000, 37.7]],
   },
   lmr400: {
     label: "LMR-400",
-    points: [[100, 1.3], [400, 2.5], [900, 3.9], [1000, 4.1], [1500, 5.1], [2000, 5.9]],
+    points: [[100, 4.3], [400, 8.2], [900, 12.8], [1000, 13.4], [1500, 16.7], [2000, 19.4]],
+  },
+  aircell7: {
+    label: "Aircell 7",
+    points: [[100, 5.97], [200, 8.59], [300, 10.64], [432, 12.92], [500, 13.98], [800, 18.05], [1000, 20.44], [1296, 23.60], [1500, 25.73], [1800, 28.50], [2000, 30.29]],
+  },
+  aircell5: {
+    label: "Aircell 5",
+    points: [[100, 8.93], [200, 12.74], [300, 15.70], [432, 18.99], [500, 20.49], [800, 26.24], [1000, 29.54], [1296, 33.92], [1500, 36.70], [1800, 40.50], [2000, 42.88]],
   },
 };
 
-const METERS_PER_100FT = 30.48;
-
-// dB pro 100ft bei gegebener Frequenz, interpoliert zwischen den bekannten
+// dB pro 100m bei gegebener Frequenz, interpoliert zwischen den bekannten
 // Datenpunkten (linear über sqrt(f), da Kabeldämpfung durch den Skineffekt
 // naeherungsweise proportional zu sqrt(f) verlaeuft). Ausserhalb des
 // Tabellenbereichs wird mit derselben sqrt(f)-Naeherung extrapoliert.
-function cableDbPer100ft(cableKey, freqMHz) {
+function cableDbPer100m(cableKey, freqMHz) {
   const cable = CABLE_TYPES[cableKey];
   if (!cable || !isFinite(freqMHz) || freqMHz <= 0) return NaN;
   const pts = cable.points;
@@ -102,9 +109,9 @@ function cableDbPer100ft(cableKey, freqMHz) {
 }
 
 function cableLossDb(cableKey, lengthM, freqMHz) {
-  const per100ft = cableDbPer100ft(cableKey, freqMHz);
-  if (!isFinite(per100ft) || !isFinite(lengthM) || lengthM < 0) return NaN;
-  return (per100ft / METERS_PER_100FT) * lengthM;
+  const per100m = cableDbPer100m(cableKey, freqMHz);
+  if (!isFinite(per100m) || !isFinite(lengthM) || lengthM < 0) return NaN;
+  return (per100m / 100) * lengthM;
 }
 
 /* ---------- Signal quality classification against -40 / -70 / -90 dBm ---------- */

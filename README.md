@@ -76,24 +76,28 @@ und der jeweils eingetragenen Frequenz berechnet (Kabeldämpfung ist
 frequenzabhängig) und in das dB-Feld eingetragen; manuelles Bearbeiten ist in
 diesem Modus deaktiviert, bis die Checkbox wieder ausgeschaltet wird.
 
-Hinterlegte Kabeltypen (typische Herstellerangaben, ca.-Werte, dB pro 100ft
-bei Referenzfrequenzen, dazwischen/darüber hinaus interpoliert bzw.
-extrapoliert über die für Koaxkabel typische
-&radic;Frequenz-Näherung):
+Hinterlegte Kabeltypen (Dämpfung in dB pro 100m bei Referenzfrequenzen,
+dazwischen/darüber hinaus interpoliert bzw. extrapoliert über die für
+Koaxkabel typische &radic;Frequenz-Näherung). RG-/LMR-/Belden-Werte sind
+typische Herstellerangaben (ca.-Werte, aus dB/100ft-Datenblattangaben
+umgerechnet); Aircell&nbsp;7/5 stammen direkt aus dem
+SSB-Electronic-Datenblatt:
 
-| Kabeltyp                | ca. dB/100ft @ 400 MHz | ca. dB/100ft @ 900 MHz |
+| Kabeltyp                | ca. dB/100m @ 400 MHz | ca. dB/100m @ 900 MHz |
 |--------------------------|------------------------|-------------------------|
-| RG58                     | 9.9                     | 15.7                    |
-| RG8X (Mini-8)            | 5.9                     | 9.3                     |
-| RG213 / RG8              | 4.4                     | 7.2                     |
-| Belden 9913 / 9913F7     | 2.4                     | 3.7                     |
-| LMR-195                  | 7.9                     | 12.1                    |
-| LMR-240                  | 4.9                     | 7.5                     |
-| LMR-400                  | 2.5                     | 3.9                     |
+| RG58                     | 32.5                    | 51.5                    |
+| RG8X (Mini-8)            | 19.4                    | 30.5                    |
+| RG213 / RG8              | 14.4                    | 23.6                    |
+| Belden 9913 / 9913F7     | 7.9                     | 12.1                    |
+| LMR-195                  | 25.9                    | 39.7                    |
+| LMR-240                  | 16.1                    | 24.6                    |
+| LMR-400                  | 8.2                     | 12.8                    |
+| Aircell 7                | 12.4                    | 19.3                    |
+| Aircell 5                | 18.3                    | 27.9                    |
 
 Für den tatsächlich verbauten Kabeltyp/die genaue Charge im Zweifel das
-Datenblatt des Herstellers prüfen — die hinterlegten Werte sind branchenübliche
-Näherungen, keine Garantiewerte.
+Datenblatt des Herstellers prüfen — bei RG-/LMR-/Belden-Kabeln sind die
+hinterlegten Werte branchenübliche Näherungen, keine Garantiewerte.
 
 ## Signalbewertung
 
