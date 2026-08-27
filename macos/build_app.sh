@@ -22,27 +22,46 @@ cp "$ROOT_DIR/script.js" "$APP_DIR/Contents/Resources/script.js"
 
 cat > "$APP_DIR/Contents/MacOS/$APP_NAME" <<'LAUNCHER'
 #!/bin/bash
-# Startet die App. Installiert pywebview beim allerersten Start automatisch
-# nach, falls es fehlt, und faellt notfalls auf den Standardbrowser zurueck.
+# Startet die App. Legt beim allerersten Start eine eigene, isolierte
+# Python-Umgebung an (umgeht "externally-managed-environment" Fehler von
+# Homebrew-Python) und installiert pywebview dort hinein. Faellt bei jedem
+# Fehler sauber auf den Standardbrowser zurueck, statt die App abstuerzen
+# zu lassen.
 set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../Resources" && pwd)"
+SUPPORT_DIR="$HOME/Library/Application Support/RFLinkBudgetCalculator"
+VENV_DIR="$SUPPORT_DIR/venv"
+LOG_FILE="$SUPPORT_DIR/install.log"
 PYTHON_BIN="$(command -v python3 || true)"
+
+fallback_to_browser() {
+  osascript -e "display alert \"Native App nicht verfuegbar\" message \"$1 Die Berechnung wird stattdessen im Standardbrowser geoeffnet. Details im Log: $LOG_FILE\"" >/dev/null 2>&1 || true
+  open "$DIR/index.html"
+  exit 0
+}
 
 if [ -z "$PYTHON_BIN" ]; then
   osascript -e 'display alert "Python 3 nicht gefunden" message "Bitte installiere Python 3 (z.B. von python.org oder mit brew install python) und starte die App erneut."' >/dev/null 2>&1 || true
   exit 1
 fi
 
-if ! "$PYTHON_BIN" -c "import webview" >/dev/null 2>&1; then
-  "$PYTHON_BIN" -m pip install --user --quiet pywebview pyobjc-framework-Cocoa pyobjc-framework-WebKit \
-    >/tmp/rf_link_budget_install.log 2>&1 || {
-      osascript -e 'display alert "Installation fehlgeschlagen" message "pywebview konnte nicht automatisch installiert werden. Die Berechnung wird stattdessen im Standardbrowser geoeffnet. Details: /tmp/rf_link_budget_install.log"' >/dev/null 2>&1 || true
-      open "$DIR/index.html"
-      exit 0
-    }
+mkdir -p "$SUPPORT_DIR"
+
+if [ ! -x "$VENV_DIR/bin/python3" ]; then
+  osascript -e 'display notification "Einmalige Einrichtung laeuft (ca. 30 Sekunden)…" with title "RF Link Budget Calculator"' >/dev/null 2>&1 || true
+  rm -rf "$VENV_DIR"
+  "$PYTHON_BIN" -m venv "$VENV_DIR" >"$LOG_FILE" 2>&1 \
+    || fallback_to_browser "Konnte keine eigene Python-Umgebung anlegen."
 fi
 
-exec "$PYTHON_BIN" "$DIR/app.py"
+if ! "$VENV_DIR/bin/python3" -c "import webview" >/dev/null 2>&1; then
+  "$VENV_DIR/bin/python3" -m pip install --quiet --upgrade pip >>"$LOG_FILE" 2>&1 || true
+  "$VENV_DIR/bin/python3" -m pip install --quiet pywebview pyobjc-framework-Cocoa pyobjc-framework-WebKit \
+    >>"$LOG_FILE" 2>&1 \
+    || fallback_to_browser "pywebview konnte nicht installiert werden."
+fi
+
+exec "$VENV_DIR/bin/python3" "$DIR/app.py"
 LAUNCHER
 
 chmod +x "$APP_DIR/Contents/MacOS/$APP_NAME"

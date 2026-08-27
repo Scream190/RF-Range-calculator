@@ -8,15 +8,23 @@ Browser-Chrome/Adressleiste) statt in einem Browser-Tab.
 
 1. `RF Link Budget Calculator.app` (aus `dist/` bzw. dem mitgelieferten ZIP)
    in den `Programme`-Ordner ziehen.
-2. Beim allerersten Start: **Rechtsklick auf die App → Öffnen** wählen (nicht
-   per Doppelklick), da die App nicht mit einem Apple-Entwicklerzertifikat
-   signiert ist und macOS Gatekeeper sonst eine Warnung zeigt. Danach genügt
-   ein normaler Doppelklick.
+2. Beim allerersten Start blockiert macOS Gatekeeper die App (nicht mit
+   einem Apple-Entwicklerzertifikat signiert). Freigeben über
+   **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten
+   „Trotzdem öffnen" (bei älteren macOS-Versionen reicht auch Rechtsklick →
+   Öffnen). Danach genügt ein normaler Doppelklick.
 3. Voraussetzung: Python 3 muss installiert sein (z. B. von
    [python.org](https://www.python.org/downloads/macos/) oder via
-   `brew install python`). Fehlt `pywebview`, installiert die App es beim
-   ersten Start automatisch nach (kurzer Moment, benötigt Internet). Schlägt
-   das fehl, öffnet sich stattdessen automatisch der Standardbrowser.
+   `brew install python`). Beim ersten Start legt die App automatisch eine
+   eigene, isolierte Python-Umgebung unter
+   `~/Library/Application Support/RFLinkBudgetCalculator/venv` an und
+   installiert `pywebview` dort hinein (ca. 20–30 Sekunden, benötigt
+   Internet; eine kurze Benachrichtigung zeigt das an). Das umgeht das
+   „externally-managed-environment"-Problem, das bei Homebrew-Python sonst
+   eine Installation ins System verhindert. Schlägt die Einrichtung dennoch
+   fehl, öffnet sich stattdessen automatisch der Standardbrowser — Details
+   dazu stehen dann in
+   `~/Library/Application Support/RFLinkBudgetCalculator/install.log`.
 
 ## App selbst bauen
 
