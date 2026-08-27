@@ -32,6 +32,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../Resources" && pwd)"
 SUPPORT_DIR="$HOME/Library/Application Support/RFLinkBudgetCalculator"
 VENV_DIR="$SUPPORT_DIR/venv"
 LOG_FILE="$SUPPORT_DIR/install.log"
+READY_MARKER="$SUPPORT_DIR/.setup_complete"
 PYTHON_BIN="$(command -v python3 || true)"
 
 fallback_to_browser() {
@@ -47,18 +48,26 @@ fi
 
 mkdir -p "$SUPPORT_DIR"
 
-if [ ! -x "$VENV_DIR/bin/python3" ]; then
+# Setup (venv + pywebview install) only ever runs once, tracked via a marker
+# file. Without this, every single launch would pay the cost of spawning a
+# whole extra Python interpreter just to test "import webview" before
+# spawning a second one for the real app - roughly doubling startup time
+# forever, not just on first run.
+if [ ! -f "$READY_MARKER" ]; then
   osascript -e 'display notification "Einmalige Einrichtung laeuft (ca. 30 Sekunden)…" with title "RF Link Budget Calculator"' >/dev/null 2>&1 || true
-  rm -rf "$VENV_DIR"
-  "$PYTHON_BIN" -m venv "$VENV_DIR" >"$LOG_FILE" 2>&1 \
-    || fallback_to_browser "Konnte keine eigene Python-Umgebung anlegen."
-fi
 
-if ! "$VENV_DIR/bin/python3" -c "import webview" >/dev/null 2>&1; then
+  if [ ! -x "$VENV_DIR/bin/python3" ]; then
+    rm -rf "$VENV_DIR"
+    "$PYTHON_BIN" -m venv "$VENV_DIR" >"$LOG_FILE" 2>&1 \
+      || fallback_to_browser "Konnte keine eigene Python-Umgebung anlegen."
+  fi
+
   "$VENV_DIR/bin/python3" -m pip install --quiet --upgrade pip >>"$LOG_FILE" 2>&1 || true
   "$VENV_DIR/bin/python3" -m pip install --quiet pywebview pyobjc-framework-Cocoa pyobjc-framework-WebKit \
     >>"$LOG_FILE" 2>&1 \
     || fallback_to_browser "pywebview konnte nicht installiert werden."
+
+  touch "$READY_MARKER"
 fi
 
 exec "$VENV_DIR/bin/python3" "$DIR/app.py"
