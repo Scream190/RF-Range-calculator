@@ -15,10 +15,12 @@ rm -rf "$APP_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
 
 cp "$SCRIPT_DIR/Info.plist" "$APP_DIR/Contents/Info.plist"
+cp "$SCRIPT_DIR/AppIcon.icns" "$APP_DIR/Contents/Resources/AppIcon.icns"
 cp "$SCRIPT_DIR/app.py" "$APP_DIR/Contents/Resources/app.py"
 cp "$ROOT_DIR/index.html" "$APP_DIR/Contents/Resources/index.html"
 cp "$ROOT_DIR/style.css" "$APP_DIR/Contents/Resources/style.css"
 cp "$ROOT_DIR/script.js" "$APP_DIR/Contents/Resources/script.js"
+cp -r "$ROOT_DIR/assets" "$APP_DIR/Contents/Resources/assets"
 
 cat > "$APP_DIR/Contents/MacOS/$APP_NAME" <<'LAUNCHER'
 #!/bin/bash

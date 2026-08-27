@@ -1,0 +1,37 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#242b3a"/>
+      <stop offset="100%" stop-color="#12151a"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="512" y1="120" x2="512" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8fe3ff"/>
+      <stop offset="100%" stop-color="#5ac8fa"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+
+  <g transform="translate(0, 90)">
+    <g fill="none" stroke="url(#glow)" stroke-linecap="round">
+      <!-- mast -->
+      <line x1="512" y1="320" x2="512" y2="700" stroke-width="32"/>
+      <!-- tripod base -->
+      <line x1="512" y1="560" x2="392" y2="700" stroke-width="32"/>
+      <line x1="512" y1="560" x2="632" y2="700" stroke-width="32"/>
+
+      <!-- right side waves -->
+      <path d="M 546 300 A 110 110 0 0 1 656 260" stroke-width="26" opacity="0.95"/>
+      <path d="M 546 300 A 190 190 0 0 1 736 190" stroke-width="26" opacity="0.65"/>
+      <path d="M 546 300 A 270 270 0 0 1 816 120" stroke-width="26" opacity="0.35"/>
+
+      <!-- left side waves (mirrored) -->
+      <path d="M 478 300 A 110 110 0 0 0 368 260" stroke-width="26" opacity="0.95"/>
+      <path d="M 478 300 A 190 190 0 0 0 288 190" stroke-width="26" opacity="0.65"/>
+      <path d="M 478 300 A 270 270 0 0 0 208 120" stroke-width="26" opacity="0.35"/>
+    </g>
+
+    <!-- antenna tip -->
+    <circle cx="512" cy="300" r="34" fill="url(#glow)"/>
+  </g>
+</svg>

@@ -11,10 +11,16 @@
 from setuptools import setup
 
 APP = ["app.py"]
-DATA_FILES = ["../index.html", "../style.css", "../script.js"]
+DATA_FILES = [
+    "../index.html",
+    "../style.css",
+    "../script.js",
+    ("assets", ["../assets/logo.svg"]),
+]
 OPTIONS = {
     "argv_emulation": False,
     "packages": ["webview"],
+    "iconfile": "AppIcon.icns",
     "plist": {
         "CFBundleName": "RF Link Budget Calculator",
         "CFBundleDisplayName": "RF Link Budget Calculator",

@@ -6,6 +6,12 @@ Funkmikrofon- (RF Mic) und In-Ear-Monitoring-Strecken (IEM) für Live-Beschallun
 Basiert auf der Methodik von Stephen Pavlik ("Avoid RF Dropouts Through Proper Gain
 Staging", Sound Design Live, sounddesignlive.com).
 
+## Logo
+
+[`assets/logo.svg`](assets/logo.svg) — stilisierter Sendemast mit Signalwellen,
+dient als Favicon/Header-Logo der Web-Version und als Grundlage für das
+macOS-App-Icon (`macos/AppIcon.icns`).
+
 ## macOS App
 
 Eine native macOS-App (echtes Fenster statt Browser-Tab) gibt es in [`macos/`](macos/README.md) –

@@ -34,9 +34,16 @@ cd macos
 ```
 
 Erstellt `macos/dist/RF Link Budget Calculator.app`. Das Skript kopiert nur
-Dateien (`index.html`, `style.css`, `script.js`, `app.py`) in ein
-App-Bundle — es ist keine Kompilierung nötig und das Skript kann auch
-außerhalb von macOS ausgeführt werden, um das Bundle vorzubereiten.
+Dateien (`index.html`, `style.css`, `script.js`, `app.py`, `assets/logo.svg`,
+`AppIcon.icns`) in ein App-Bundle — es ist keine Kompilierung nötig und das
+Skript kann auch außerhalb von macOS ausgeführt werden, um das Bundle
+vorzubereiten.
+
+Das App-Icon (`AppIcon.icns`) ist aus [`../assets/logo.svg`](../assets/logo.svg)
+gerendert (ohne `iconutil`: PNGs in den Standardgrößen erzeugt und im
+Apple-.icns-Format zusammengepackt). Nach einer Änderung an `logo.svg` muss
+`AppIcon.icns` entsprechend neu erzeugt werden, damit das App-Icon aktuell
+bleibt.
 
 ## Vollständig eigenständige Variante (ohne Python-Abhängigkeit beim Nutzer)
 
